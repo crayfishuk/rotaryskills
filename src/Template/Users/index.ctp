@@ -15,6 +15,7 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('club_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('username') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('password') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
@@ -27,6 +28,7 @@
             <tr>
                 <td><?= $this->Number->format($user->id) ?></td>
                 <td><?= $user->has('club') ? $this->Html->link($user->club->name, ['controller' => 'Clubs', 'action' => 'view', $user->club->id]) : '' ?></td>
+                <td><?= h($user->username) ?></td>
                 <td><?= h($user->email) ?></td>
                 <td><?= h($user->password) ?></td>
                 <td><?= h($user->created) ?></td>

@@ -28,7 +28,7 @@
                 <td><?= $this->Number->format($skill->id) ?></td>
                 <td><?= h($skill->title) ?></td>
                 <td><?= h($skill->description) ?></td>
-                <td><?= $skill->has('user') ? $this->Html->link($skill->user->id, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
+                <td><?= $skill->has('user') ? $this->Html->link($skill->user->username, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
                 <td><?= h($skill->created) ?></td>
                 <td><?= h($skill->modified) ?></td>
                 <td class="actions">

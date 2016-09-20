@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $club_id
+ * @property string $username
  * @property string $email
  * @property string $password
  * @property \Cake\I18n\Time $created
