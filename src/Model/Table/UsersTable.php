@@ -63,6 +63,10 @@ class UsersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->requirePresence('username', 'create')
+            ->notEmpty('username');
+
+        $validator
             ->email('email')
             ->requirePresence('email', 'create')
             ->notEmpty('email');
@@ -83,6 +87,7 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
+        $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->existsIn(['club_id'], 'Clubs'));
 

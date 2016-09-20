@@ -45,8 +45,8 @@ class SkillsFixture extends TestFixture
             'title' => 'Lorem ipsum dolor sit amet',
             'description' => 'Lorem ipsum dolor sit amet',
             'user_id' => 1,
-            'created' => '2016-09-10 16:54:22',
-            'modified' => '2016-09-10 16:54:22'
+            'created' => '2016-09-20 20:27:46',
+            'modified' => '2016-09-20 20:27:46'
         ],
     ];
 }
