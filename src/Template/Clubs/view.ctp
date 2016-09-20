@@ -46,6 +46,7 @@
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Club Id') ?></th>
+                <th scope="col"><?= __('Username') ?></th>
                 <th scope="col"><?= __('Email') ?></th>
                 <th scope="col"><?= __('Password') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
@@ -56,6 +57,7 @@
             <tr>
                 <td><?= h($users->id) ?></td>
                 <td><?= h($users->club_id) ?></td>
+                <td><?= h($users->username) ?></td>
                 <td><?= h($users->email) ?></td>
                 <td><?= h($users->password) ?></td>
                 <td><?= h($users->created) ?></td>

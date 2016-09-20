@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $skill->has('user') ? $this->Html->link($skill->user->id, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
+            <td><?= $skill->has('user') ? $this->Html->link($skill->user->username, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
