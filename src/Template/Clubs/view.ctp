@@ -45,23 +45,33 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Last Name') ?></th>
+                <th scope="col"><?= __('First Name') ?></th>
                 <th scope="col"><?= __('Club Id') ?></th>
+                <th scope="col"><?= __('Approved') ?></th>
+                <th scope="col"><?= __('Club Admin') ?></th>
                 <th scope="col"><?= __('Username') ?></th>
                 <th scope="col"><?= __('Email') ?></th>
                 <th scope="col"><?= __('Password') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Admin') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($club->users as $users): ?>
             <tr>
                 <td><?= h($users->id) ?></td>
+                <td><?= h($users->last_name) ?></td>
+                <td><?= h($users->first_name) ?></td>
                 <td><?= h($users->club_id) ?></td>
+                <td><?= h($users->approved) ?></td>
+                <td><?= h($users->club_admin) ?></td>
                 <td><?= h($users->username) ?></td>
                 <td><?= h($users->email) ?></td>
                 <td><?= h($users->password) ?></td>
                 <td><?= h($users->created) ?></td>
                 <td><?= h($users->modified) ?></td>
+                <td><?= h($users->admin) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>

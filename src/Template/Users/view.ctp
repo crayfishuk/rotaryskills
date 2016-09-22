@@ -15,6 +15,14 @@
     <h3><?= h($user->username) ?></h3>
     <table class="vertical-table">
         <tr>
+            <th scope="row"><?= __('Last Name') ?></th>
+            <td><?= h($user->last_name) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('First Name') ?></th>
+            <td><?= h($user->first_name) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Club') ?></th>
             <td><?= $user->has('club') ? $this->Html->link($user->club->name, ['controller' => 'Clubs', 'action' => 'view', $user->club->id]) : '' ?></td>
         </tr>
@@ -41,6 +49,18 @@
         <tr>
             <th scope="row"><?= __('Modified') ?></th>
             <td><?= h($user->modified) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Approved') ?></th>
+            <td><?= $user->approved ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Club Admin') ?></th>
+            <td><?= $user->club_admin ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Admin') ?></th>
+            <td><?= $user->admin ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
     <div class="related">

@@ -63,6 +63,24 @@ class UsersTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
+            ->requirePresence('last_name', 'create')
+            ->notEmpty('last_name');
+
+        $validator
+            ->requirePresence('first_name', 'create')
+            ->notEmpty('first_name');
+
+        $validator
+            ->boolean('approved')
+            ->requirePresence('approved', 'create')
+            ->notEmpty('approved');
+
+        $validator
+            ->boolean('club_admin')
+            ->requirePresence('club_admin', 'create')
+            ->notEmpty('club_admin');
+
+        $validator
             ->requirePresence('username', 'create')
             ->notEmpty('username');
 
@@ -74,6 +92,11 @@ class UsersTable extends Table
         $validator
             ->requirePresence('password', 'create')
             ->notEmpty('password');
+
+        $validator
+            ->boolean('admin')
+            ->requirePresence('admin', 'create')
+            ->notEmpty('admin');
 
         return $validator;
     }

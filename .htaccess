@@ -3,6 +3,7 @@
 #<IfModule mod_headers.c>
 #    RequestHeader unset Proxy
 #</IfModule>
+SetEnv DEBUG false
 
 <IfModule mod_rewrite.c>
     RewriteEngine on
