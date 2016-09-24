@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Table\ClubsTable;
 
 /**
  * Skills Controller
@@ -10,7 +11,32 @@ use App\Controller\AppController;
  */
 class SkillsController extends AppController
 {
+    /**
+     * Show a cloud of Skills tags
+     *
+     * @return \Cake\Network\Response|null
+     */
+    public function cloud()
+    {
+        $skills = $this->Skills->find();
+        $skills->contain(['Clubs']);
 
+        $total = 0;
+        foreach ($skills as $skill) {
+            $clubCount = count($skill->clubs);
+            $count[ $skill->id ] = [
+                'count' => $clubCount,
+                'title' => $skill->title
+                ];
+            $total += $clubCount;
+        }
+
+        $clubs = $this->Skills->Clubs->find();
+        $clubs->order('name');
+        $clubs->toList();
+
+        $this->set(compact('skills', 'total', 'count', 'clubs'));
+    }
     /**
      * Index method
      *

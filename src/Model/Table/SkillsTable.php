@@ -46,9 +46,7 @@ class SkillsTable extends Table
             'joinType' => 'INNER'
         ]);
         $this->belongsToMany('Clubs', [
-            'foreignKey' => 'skill_id',
-            'targetForeignKey' => 'club_id',
-            'joinTable' => 'clubs_skills'
+            'through' => 'ClubsSkills'
         ]);
     }
 

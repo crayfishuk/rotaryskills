@@ -7,7 +7,7 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Clubs Model
+ * SkillsClubs Model
  *
  * @property \Cake\ORM\Association\HasMany $Users
  * @property \Cake\ORM\Association\BelongsToMany $Skills
@@ -22,7 +22,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class ClubsTable extends Table
+class ClubsSkillsTable extends Table
 {
 
     /**
@@ -35,41 +35,14 @@ class ClubsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('clubs');
+        $this->table('clubs_skills');
         $this->displayField('name');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('Users', [
-            'foreignKey' => 'club_id'
-        ]);
-        $this->belongsToMany('Skills', [
-           'through' => 'ClubsSkills'
-        ]);
+        $this->belongsTo('Skills');
+        $this->belongsTo('Clubs');
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
-
-        $validator
-            ->allowEmpty('name');
-
-        $validator
-            ->allowEmpty('description');
-
-        $validator
-            ->allowEmpty('url');
-
-        return $validator;
-    }
-}
+ }
