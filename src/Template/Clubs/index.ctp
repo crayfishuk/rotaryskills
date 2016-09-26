@@ -13,9 +13,8 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('user_count') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -23,9 +22,8 @@
         <tbody>
             <?php foreach ($clubs as $club): ?>
             <tr>
-                <td><?= $this->Number->format($club->id) ?></td>
                 <td><?= h($club->name) ?></td>
-                <td><?= h($club->created) ?></td>
+                <td><?= h($club->user_count) ?></td>
                 <td><?= h($club->modified) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $club->id]) ?>

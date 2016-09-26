@@ -38,6 +38,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         $('select[multiple]').touchMultiSelect();
       });
     </script>
+    <style>
+      ul.touchMultiSelect { width: 100% }
+    </style>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>

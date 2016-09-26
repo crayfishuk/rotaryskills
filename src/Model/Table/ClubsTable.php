@@ -72,4 +72,20 @@ class ClubsTable extends Table
 
         return $validator;
     }
+
+    /**
+     * Add a default order to queries if not specified
+     *
+     * @param $event
+     * @param $query
+     * @param $options
+     * @param $primary
+     * @return mixed
+     */
+    public function beforeFind ($event, $query, $options, $primary) {
+        $order = $query->clause('order');
+        if ($order === null || !count($order)) {
+            $query->order( [ "name" => 'ASC' ] );
+        }
+    }
 }

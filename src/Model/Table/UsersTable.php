@@ -41,6 +41,10 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->addBehavior('CounterCache', [
+            'Clubs' => ['user_count']
+        ]);
+
         $this->belongsTo('Clubs', [
             'foreignKey' => 'club_id',
             'joinType' => 'INNER'
@@ -115,5 +119,22 @@ class UsersTable extends Table
         $rules->add($rules->existsIn(['club_id'], 'Clubs'));
 
         return $rules;
+    }
+
+
+    /**
+     * Add a default order to queries if not specified
+     *
+     * @param $event
+     * @param $query
+     * @param $options
+     * @param $primary
+     * @return mixed
+     */
+    public function beforeFind ($event, $query, $options, $primary) {
+        $order = $query->clause('order');
+        if ($order === null || !count($order)) {
+            $query->order( [ 'last_name' => 'ASC', 'first_name' => 'ASC' ] );
+        }
     }
 }

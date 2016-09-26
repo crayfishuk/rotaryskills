@@ -22,7 +22,7 @@
             echo $this->Form->input('title');
             echo $this->Form->input('description');
             echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('clubs._ids', ['options' => $clubs]);
+            echo $this->Form->input('clubs._ids', ['options' => $clubs, 'style'=>'width:80%']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
