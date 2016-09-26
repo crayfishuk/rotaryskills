@@ -22,7 +22,7 @@
 </nav>
 <div class="clubs index large-9 medium-8 columns content">
 
-    <div id="tagCloud" style="width: 50%; height: 200px; display: block; float: left "></div>
+    <div id="tagCloud" style="width: 50%; height: 600px; display: block; float: left "></div>
 
 
 
@@ -36,11 +36,10 @@
         </ul>
     </div>
 
-
-
 <?= $this->Html->scriptStart(['inline'=>false, 'safe'=>false]) ?>
 //<script type="javascript">
 <?php
+// See http://mistic100.github.io/jQCloud/index.html
 foreach ($count as $id=>$skillCount) {
     $words[] = [
         'text'=>$skillCount['title'],
@@ -49,6 +48,7 @@ foreach ($count as $id=>$skillCount) {
         'html' => [ 'title' => $skillCount['count'] . ' club' . ($skillCount['count']==1 ? '' : 's') ]
     ];
 }
+
 ?>
 var words = <?= json_encode($words) ?>;
 $(document).ready( function() {
@@ -56,4 +56,5 @@ $(document).ready( function() {
 });
 //</script>
 <?= $this->Html->scriptEnd() ?>
+
 </div>

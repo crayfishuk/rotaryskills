@@ -21,7 +21,11 @@
         <?php
             echo $this->Form->input('name');
             echo $this->Form->input('description');
-            echo $this->Form->input('url');
+            echo $this->Form->input('url', ['label'=>'website']);
+            echo $this->Form->input('contact_name');
+            echo $this->Form->input('contact_email');
+            echo $this->Form->input('contact_phone');
+
             echo $this->Form->input('skills._ids', ['options' => $skills]);
         ?>
     </fieldset>

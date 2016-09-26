@@ -24,11 +24,13 @@ class SkillsController extends AppController
         $total = 0;
         foreach ($skills as $skill) {
             $clubCount = count($skill->clubs);
-            $count[ $skill->id ] = [
-                'count' => $clubCount,
-                'title' => $skill->title
-                ];
-            $total += $clubCount;
+            if ($clubCount > 0) {
+                $count[ $skill->id ] = [
+                  'count' => $clubCount,
+                  'title' => $skill->title
+                  ];
+                $total += $clubCount;
+            }
         }
 
         $clubs = $this->Skills->Clubs->find();

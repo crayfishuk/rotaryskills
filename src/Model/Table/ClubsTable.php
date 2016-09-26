@@ -70,6 +70,10 @@ class ClubsTable extends Table
         $validator
             ->allowEmpty('url');
 
+        $validator
+            ->allowEmpty('contact_email')
+            ->email('contact_email');
+
         return $validator;
     }
 
