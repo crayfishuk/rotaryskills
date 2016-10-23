@@ -13,10 +13,9 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('title') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('description') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('User.last_name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -25,10 +24,9 @@
         <tbody>
             <?php foreach ($skills as $skill): ?>
             <tr>
-                <td><?= $this->Number->format($skill->id) ?></td>
                 <td><?= h($skill->title) ?></td>
                 <td><?= h($skill->description) ?></td>
-                <td><?= $skill->has('user') ? $this->Html->link($skill->user->username, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
+                <td><?= $skill->has('user') ? $this->Html->link($skill->user->last_name, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
                 <td><?= h($skill->created) ?></td>
                 <td><?= h($skill->modified) ?></td>
                 <td class="actions">

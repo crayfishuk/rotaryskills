@@ -27,10 +27,6 @@
             <td><?= $skill->has('user') ? $this->Html->link($skill->user->username, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($skill->id) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Created') ?></th>
             <td><?= h($skill->created) ?></td>
         </tr>
@@ -44,7 +40,6 @@
         <?php if (!empty($skill->clubs)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
-                <th scope="col"><?= __('Id') ?></th>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Description') ?></th>
                 <th scope="col"><?= __('Url') ?></th>
@@ -54,7 +49,6 @@
             </tr>
             <?php foreach ($skill->clubs as $clubs): ?>
             <tr>
-                <td><?= h($clubs->id) ?></td>
                 <td><?= h($clubs->name) ?></td>
                 <td><?= h($clubs->description) ?></td>
                 <td><?= h($clubs->url) ?></td>
