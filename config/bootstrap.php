@@ -223,5 +223,20 @@ if (Configure::read('debug')) {
 }
 
 Plugin::load('Migrations');
+//Plugin::load('Gourmet/KnpMenu');
+//Plugin::load('BootstrapUI');
+Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
 
-Plugin::load('Bootstrap');
+
+Configure::write('Theme', [
+    'title' => 'Rotary1260 SkillsDB',
+    'logo' => [
+        'mini' => '<b>S</b>DB',
+        'large' => '<b>Skills</b>DB'
+    ],
+    'login' => [
+        'show_remember' => true,
+        'show_register' => false,
+        'show_social' => false
+    ]
+]);

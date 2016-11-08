@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 
 /**
@@ -43,6 +44,34 @@ class AppController extends Controller
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+
+        $this->loadComponent('Auth', [
+            'loginRedirect'  => [
+                'controller' => 'Users',
+                'action'     => 'index',
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Skills',
+                'action'     => 'cloud',
+            ],
+        ]);
+    }
+
+    /**
+     * Run before any controller action
+     *
+     * @param Event $event
+     * @return \Cake\Network\Response|null
+     */
+    public function beforeFilter(Event $event)
+    {
+        // Allow these actions globally
+        $this->Auth->allow(['index', 'cloud']);
+        $this->Auth->allow(['edit']);
+
+
+
+        return parent::beforeFilter($event);
     }
 
     /**
@@ -53,10 +82,18 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
+        // Enable the AdminLTE Theme
+        $this->viewBuilder()->theme('AdminLTE');
+
+        // Read theme config from bootstrap.php
+        $this->set('theme', Configure::read('Theme'));
+
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+
+        $this->set('Auth', $this->Auth->user());
     }
 }
