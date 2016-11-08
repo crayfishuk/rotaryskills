@@ -33,6 +33,7 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('Invalid username or password, try again'));
         }
+        $this->viewBuilder()->layout('login');
     }
 
     /**
