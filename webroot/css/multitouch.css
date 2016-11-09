@@ -4,7 +4,7 @@ ul.touchMultiSelect {
   padding: 5px 5px 2px 5px;
   background-color: #E5E5E5;
   border: 1px solid #CCC;
-  width: 300px;
+  /*width: 300px; */
 }
 ul.touchMultiSelect li {
   list-style: none;

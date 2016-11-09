@@ -28,6 +28,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+    public $helpers = ['Ui'];
 
     /**
      * Initialization hook method.

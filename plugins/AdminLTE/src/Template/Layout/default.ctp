@@ -21,7 +21,7 @@
 
     <?= $this->Html->css('multitouch') ?>
 
-    <?= $this->Html->script("https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js") ?>
+    <?= $this->Html->script("https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js") ?>
     <?= $this->Html->script("jquery.multiselect.js") ?>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -63,7 +63,7 @@
 
             <?php echo $this->Flash->render(); ?>
             <?php echo $this->Flash->render('auth'); ?>
-            <?php echo $this->fetch('content'); ?>
+           <section class="content"><?php echo $this->fetch('content'); ?></section>
 
         </div>
         <!-- /.content-wrapper -->
@@ -81,7 +81,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 2.1.4 -->
-<?php echo $this->Html->script('AdminLTE./plugins/jQuery/jQuery-2.1.4.min'); ?>
+<?php //echo $this->Html->script('AdminLTE./plugins/jQuery/jQuery-2.1.4.min'); ?>
 <!-- Bootstrap 3.3.5 -->
 <?php echo $this->Html->script('AdminLTE./bootstrap/js/bootstrap'); ?>
 <!-- SlimScroll -->

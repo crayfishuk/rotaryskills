@@ -1,26 +1,17 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Club'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Skills'), ['controller' => 'Skills', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Skill'), ['controller' => 'Skills', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="clubs index large-9 medium-8 columns content">
-    <h3><?= __('Clubs') ?></h3>
-    <table cellpadding="0" cellspacing="0">
+<div class="row">
+
+    <?= $this->Ui->boxStart(__('Clubs'), 8) ?>
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_count') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
+        <tr>
+            <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('user_count') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+            <th scope="col" class="actions"><?= __('Actions') ?></th>
+        </tr>
         </thead>
         <tbody>
-            <?php foreach ($clubs as $club): ?>
+        <?php foreach ($clubs as $club): ?>
             <tr>
                 <td><?= h($club->name) ?></td>
                 <td><?= h($club->user_count) ?></td>
@@ -31,7 +22,7 @@
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $club->id], ['confirm' => __('Are you sure you want to delete # {0}?', $club->id)]) ?>
                 </td>
             </tr>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
         </tbody>
     </table>
     <div class="paginator">
@@ -40,6 +31,14 @@
             <?= $this->Paginator->numbers() ?>
             <?= $this->Paginator->next(__('next') . ' >') ?>
         </ul>
-        <p><?= $this->Paginator->counter() ?></p>
     </div>
+    <?= $this->Ui->boxEnd(); ?>
+
+    <?= $this->Ui->boxStart(__('About Clubs'), 4); ?>
+    <p>This section lists all the Clubs that the system knows about.</p>
+    <p>Users associated with a club can add Skills for the Club,
+        and the Club Administrator can amend details about the club as well as maintain the Users within the Club.
+    </p>
+    <?= $this->Ui->boxEnd(); ?>
+
 </div>

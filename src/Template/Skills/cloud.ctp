@@ -10,12 +10,12 @@
     }
 </style>
 
-<div class="clubs index large-9 medium-8 columns content">
+<div class="row">
 
-    <div id="tagCloud" style="width: 50%; height: 600px; display: block; float: left "></div>
+    <div id="tagCloud" class="col-md-6" style="height: 600px; "></div>
 
 
-    <div class="cols" style="width: 50%; display: block;float: left">
+    <div class="col-md-6 cols" >
         <ul>
             <?php foreach ($clubs as $club) : ?>
                 <li>
