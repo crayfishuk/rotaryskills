@@ -28,6 +28,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
+
     public $helpers = ['Ui'];
 
     /**
@@ -69,8 +70,6 @@ class AppController extends Controller
         // Allow these actions globally
         $this->Auth->allow(['index', 'cloud']);
         $this->Auth->allow(['edit']);
-
-
 
         return parent::beforeFilter($event);
     }

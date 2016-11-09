@@ -12,6 +12,10 @@ use Cake\Event\Event;
 class UsersController extends AppController
 {
 
+    public $paginate = [
+        'limit' => 15
+    ];
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
@@ -71,7 +75,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Clubs', 'Skills']
+            'contain' => ['Clubs', 'Skills', 'Skills.Users']
         ]);
 
         $this->set('user', $user);

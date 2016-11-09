@@ -11,6 +11,8 @@ use App\Model\Table\ClubsTable;
  */
 class SkillsController extends AppController
 {
+
+
     /**
      * Show a cloud of Skills tags
      *
@@ -47,7 +49,8 @@ class SkillsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['Users'],
+            'limit'=>15,
         ];
         $skills = $this->paginate($this->Skills);
 

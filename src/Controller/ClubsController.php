@@ -11,6 +11,10 @@ use App\Controller\AppController;
 class ClubsController extends AppController
 {
 
+    public $paginate = [
+        'limit' => 15
+    ];
+
     /**
      * Index method
      *
@@ -34,7 +38,7 @@ class ClubsController extends AppController
     public function view($id = null)
     {
         $club = $this->Clubs->get($id, [
-            'contain' => ['Skills', 'Users']
+            'contain' => ['Skills', 'Users', 'Skills.Users']
         ]);
 
         $this->set('club', $club);
