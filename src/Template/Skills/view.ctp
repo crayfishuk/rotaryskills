@@ -1,7 +1,7 @@
-
+<div class="content">
 <div class="skills view large-9 medium-8 columns content col-md-8">
     <h3><?= h($skill->title) ?></h3>
-    <table class="vertical-table">
+    <table class="table vertical-table">
         <tr>
             <th scope="row"><?= __('Title') ?></th>
             <td><?= h($skill->title) ?></td>
@@ -26,29 +26,24 @@
     <div class="related">
         <h4><?= __('Related Clubs') ?></h4>
         <?php if (!empty($skill->clubs)): ?>
-        <table cellpadding="0" cellspacing="0">
+        <table cellpadding="0" cellspacing="0" class="table table-striped">
             <tr>
                 <th scope="col"><?= __('Name') ?></th>
                 <th scope="col"><?= __('Description') ?></th>
                 <th scope="col"><?= __('Url') ?></th>
-                <!--<th scope="col">--><?//= __('Created') ?><!--</th>-->
-                <!--<th scope="col">--><?//= __('Modified') ?><!--</th>-->
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+
             </tr>
             <?php foreach ($skill->clubs as $clubs): ?>
             <tr>
-                <td><?= h($clubs->name) ?></td>
+                <td><?= $this->Html->link(h($clubs->name), ['controller'=>'clubs', 'action'=>'view', $clubs->id]) ?></td>
                 <td><?= h($clubs->description) ?></td>
                 <td><?= h($clubs->url) ?></td>
-                <!--<td>--><?//= h($clubs->created) ?><!--</td>-->
-                <!--<td>--><?//= h($clubs->modified) ?><!--</td>-->
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Clubs', 'action' => 'view', $clubs->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Clubs', 'action' => 'edit', $clubs->id]) ?>
-                </td>
+
             </tr>
             <?php endforeach; ?>
         </table>
         <?php endif; ?>
     </div>
+</div>
+    <div class="clearfix"></div>
 </div>
