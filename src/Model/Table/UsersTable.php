@@ -10,13 +10,13 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Clubs
- * @property \Cake\ORM\Association\HasMany $Skills
+ * @property \Cake\ORM\Association\HasMany   $Skills
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options =[])
  * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null)
  *
@@ -42,15 +42,15 @@ class UsersTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->addBehavior('CounterCache', [
-            'Clubs' => ['user_count']
+            'Clubs' => ['user_count'],
         ]);
 
         $this->belongsTo('Clubs', [
             'foreignKey' => 'club_id',
-            'joinType' => 'INNER'
+            'joinType'   => 'INNER',
         ]);
         $this->hasMany('Skills', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
     }
 
@@ -121,7 +121,6 @@ class UsersTable extends Table
         return $rules;
     }
 
-
     /**
      * Add a default order to queries if not specified
      *
@@ -131,10 +130,29 @@ class UsersTable extends Table
      * @param $primary
      * @return mixed
      */
-    public function beforeFind ($event, $query, $options, $primary) {
+    public function beforeFind($event, $query, $options, $primary)
+    {
         $order = $query->clause('order');
         if ($order === null || !count($order)) {
-            $query->order( [ 'last_name' => 'ASC', 'first_name' => 'ASC' ] );
+            $query->order(['last_name' => 'ASC', 'first_name' => 'ASC']);
         }
     }
+
+    /**
+     * True if the given user is an admin for the Club
+     *
+     * @param $userId
+     * @param $clubId
+     * @return bool
+     */
+    public function isClubAdmin($userId, $clubId)
+    {
+        return $this->exists([
+                                 'OR' => [
+                                     ['id' => $userId, 'admin' => true],
+                                     ['id' => $userId, 'club_id' => $clubId, 'club_admin' => true],
+                                 ],
+                             ]);
+    }
+
 }

@@ -6,20 +6,22 @@ use Cake\ORM\Entity;
 /**
  * User Entity
  *
- * @property int $id
- * @property string $last_name
- * @property string $first_name
- * @property int $club_id
- * @property bool $approved
- * @property bool $club_admin
- * @property string $username
- * @property string $email
- * @property string $password
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property bool $admin
+ * @property int                       $id
+ * @property string                    $last_name
+ * @property string                    $first_name
+ * @property int                       $club_id
+ * @property bool                      $approved
+ * @property bool                      $club_admin
+ * @property string                    $username
+ * @property string                    $email
+ * @property string                    $password
+ * @property \Cake\I18n\Time           $created
+ * @property \Cake\I18n\Time           $modified
+ * @property bool                      $admin
  *
- * @property \App\Model\Entity\Club $club
+ * @property string                    $full_name
+ *
+ * @property \App\Model\Entity\Club    $club
  * @property \App\Model\Entity\Skill[] $skills
  */
 class User extends Entity
@@ -35,8 +37,8 @@ class User extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        '*'  => true,
+        'id' => false,
     ];
 
     /**
@@ -45,6 +47,32 @@ class User extends Entity
      * @var array
      */
     protected $_hidden = [
-        'password'
+        'password',
     ];
+
+    /**
+     * Expose the virtual fields
+     *
+     * @var array
+     */
+    protected $_virtual = ['full_name'];
+
+    /**
+     * Provide a FullName virtual field
+     *
+     * Accessible (via 'magic') as $user->full_name
+     *
+     * @return string
+     */
+    protected function _getFullName()
+    {
+        return trim($this->_properties['first_name'] . ' ' . $this->_properties['last_name']);
+    }
+
+    public function isAdminForClub($clubId)
+    {
+        return
+            $this->_properties['admin'] ||
+            ($this->_properties['club_admin'] && $this->_properties['club_id'] == $clubId);
+    }
 }

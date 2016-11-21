@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\HasMany $Users
  * @property \Cake\ORM\Association\BelongsToMany $Skills
+ * @property \Cake\ORM\Association\HasMany $ClubAdmins
  *
  * @method \App\Model\Entity\Club get($primaryKey, $options = [])
  * @method \App\Model\Entity\Club newEntity($data = null, array $options = [])
@@ -46,6 +47,13 @@ class ClubsTable extends Table
         ]);
         $this->belongsToMany('Skills', [
            'through' => 'ClubsSkills'
+        ]);
+
+        $this->hasMany('ClubAdmins', [
+            'className' => 'Users',
+            'foreign_key' => 'club_id',
+            'joinType' => 'INNER',
+            'conditions' => ['ClubAdmins.club_admin' => true]
         ]);
     }
 
@@ -92,4 +100,5 @@ class ClubsTable extends Table
             $query->order( [ "name" => 'ASC' ] );
         }
     }
+
 }

@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Collection\Collection;
+use Cake\Controller\Component\AuthComponent;
 
 /**
  * Clubs Controller
@@ -12,7 +14,7 @@ class ClubsController extends AppController
 {
 
     public $paginate = [
-        'limit' => 15
+        'limit' => 15,
     ];
 
     /**
@@ -38,9 +40,19 @@ class ClubsController extends AppController
     public function view($id = null)
     {
         $club = $this->Clubs->get($id, [
-            'contain' => ['Skills', 'Users', 'Skills.Users']
+            'contain' => ['Skills', 'Users', 'Skills.Users', 'ClubAdmins'],
         ]);
 
+        $users           = empty($club->users) ?
+            'No Users yet' :
+            implode(', ', (new Collection($club->users))->extract('full_name')->toArray());
+        $clubAdmins      = empty($club->club_admins) ?
+            'No Administrators yet' :
+            implode(', ', (new Collection($club->club_admins))->extract('full_name')->toArray());
+        $authIsClubAdmin = $this->Clubs->Users->isClubAdmin($this->Auth->user('id'), $id);
+
+        $this->set(compact('clubAdmins', 'users', 'authIsClubAdmin'));
+        $this->set('title', __('Rotary Club of ') . $club->name);
         $this->set('club', $club);
         $this->set('_serialize', ['club']);
     }
@@ -78,7 +90,7 @@ class ClubsController extends AppController
     public function edit($id = null)
     {
         $club = $this->Clubs->get($id, [
-            'contain' => ['Skills']
+            'contain' => ['Skills'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);

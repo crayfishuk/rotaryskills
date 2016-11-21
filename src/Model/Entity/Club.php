@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\Utility\Hash;
 
 /**
  * Club Entity
@@ -10,11 +11,14 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $description
  * @property string $url
+ * @property string $contact_email
+ * @property string $contact_phone
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *
  * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\Skill[] $skills
+ * @property \App\Model\Entity\User[] $club_admins
  */
 class Club extends Entity
 {
@@ -32,4 +36,10 @@ class Club extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _getDescription($description)
+    {
+        return empty($description) ? 'No club description yet' : $description;
+    }
+
 }

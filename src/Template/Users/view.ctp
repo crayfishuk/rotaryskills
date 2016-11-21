@@ -44,14 +44,13 @@
         </tr>
     </table>
     <div class="related">
-        <h4><?= __('Related Skills') ?></h4>
+        <h4><?= __('Created Skills Records') ?></h4>
         <?php if (!empty($user->skills)): ?>
         <table cellpadding="0" cellspacing="0" class="table striped-table">
             <tr>
 
                 <th scope="col"><?= __('Title') ?></th>
                 <th scope="col"><?= __('Description') ?></th>
-                <th scope="col"><?= __('Creator') ?></th>
 
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -61,7 +60,6 @@
 
                 <td><?= h($skills->title) ?></td>
                 <td><?= h($skills->description) ?></td>
-                <td><?= h($skills->user_id) ?></td>
 
                 <td><?= h($skills->modified) ?></td>
                 <td class="actions">

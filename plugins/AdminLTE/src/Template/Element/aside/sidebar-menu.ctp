@@ -44,6 +44,18 @@ if (file_exists($file)) {
     </li>
 
 
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-user"></i> <span>Users</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="<?php echo $this->Url->build('/users/index'); ?>"><i class="fa fa-search"></i> View</a></li>
+            <li><a href="<?php echo $this->Url->build('/users/add'); ?>"><i class="fa fa-plus"></i> Add</a></li>
+        </ul>
+    </li>
+
+
+
     <!--<li class="treeview">-->
     <!--    <a href="#">-->
     <!--        <i class="fa fa-files-o"></i>-->

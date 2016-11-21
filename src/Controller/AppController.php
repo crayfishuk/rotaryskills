@@ -69,7 +69,7 @@ class AppController extends Controller
     {
         // Allow these actions globally
         $this->Auth->allow(['index', 'cloud']);
-        $this->Auth->allow(['edit']);
+        $this->Auth->allow(['view']);
 
         return parent::beforeFilter($event);
     }
@@ -95,5 +95,6 @@ class AppController extends Controller
         }
 
         $this->set('Auth', $this->Auth->user());
+        $this->set('authIsAdmin', $this->Auth->user('admin'));
     }
 }

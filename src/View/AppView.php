@@ -13,6 +13,9 @@
  */
 namespace App\View;
 
+use AdminLTE\View\Helper\FormHelper;
+use Cake\View\Helper\HtmlHelper;
+use Cake\View\Helper\TextHelper;
 use Cake\View\View;
 
 /**
@@ -21,9 +24,18 @@ use Cake\View\View;
  * Your application’s default view class
  *
  * @link http://book.cakephp.org/3.0/en/views.html#the-app-view
+ *
+ * @property HtmlHelper $Html
+ * @property TextHelper $Text
+ * @property FormHelper $Form
  */
 class AppView extends View
 {
+
+    /**
+     *@var $this View
+     */
+
 
     /**
      * Initialization hook method.
