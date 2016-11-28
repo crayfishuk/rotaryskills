@@ -1,49 +1,60 @@
-<div class="content">
-<div class="skills view large-9 medium-8 columns content col-md-8">
-    <h3><?= h($skill->title) ?></h3>
+<?php /** @var \App\View\AppView $this */ ?>
+<?php /** @var \App\Model\Entity\Skill $skill */ ?>
+
+<?php $this->assign('title', __('Skill') . ': ' . $skill->title) ?>
+
+<?= $this->Ui->boxStart(null, 6) ?>
+
     <table class="table vertical-table">
         <tr>
             <th scope="row"><?= __('Title') ?></th>
-            <td><?= h($skill->title) ?></td>
+            <td>
+                <?= h($skill->title) ?>
+                <?= $skill->approved ? $this->Ui->label('Approved') : $this->Ui->label('Pending', 'orange') ?>
+            </td>
         </tr>
         <tr>
             <th scope="row"><?= __('Description') ?></th>
-            <td><?= h($skill->description) ?></td>
+            <td><?= $this->Text->autoParagraph($skill->description) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Creator') ?></th>
-            <td><?= $skill->has('user') ? $this->Html->link($skill->user->username, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($skill->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($skill->modified) ?></td>
+            <th scope="row"><?= __('Created by') ?></th>
+            <td>
+                <?php if ($skill->has('user')) {
+                    echo $skill->user->full_name;
+                    if ($skill->user->has('club')) {
+                        echo ' (' .
+                            $this->Html->link(
+                                $skill->user->club->name,
+                                ['controller' => 'Clubs', 'action' => 'view', $skill->user->club->id]) .
+                            ')';
+                    }
+                }
+                ?>
+                <?= $this->Time->nice($skill->created) ?>
+            </td>
         </tr>
     </table>
-    <div class="related">
-        <h4><?= __('Related Clubs') ?></h4>
-        <?php if (!empty($skill->clubs)): ?>
-        <table cellpadding="0" cellspacing="0" class="table table-striped">
-            <tr>
-                <th scope="col"><?= __('Name') ?></th>
-                <th scope="col"><?= __('Description') ?></th>
-                <th scope="col"><?= __('Url') ?></th>
+    <?php if ($authIsAdmin) : ?>
+        <?= !$skill->approved ? $this->Ui->button('Approve', ['action'=>'approve', $skill->id]) : '' ?>
+        <?= $this->Ui->button('Edit', ['action'=>'edit', $skill->id ]); ?>
+    <?php endif ?>
+<?= $this->Ui->boxEnd() ?>
 
-            </tr>
-            <?php foreach ($skill->clubs as $clubs): ?>
-            <tr>
-                <td><?= $this->Html->link(h($clubs->name), ['controller'=>'clubs', 'action'=>'view', $clubs->id]) ?></td>
-                <td><?= h($clubs->description) ?></td>
-                <td><?= h($clubs->url) ?></td>
+<?= $this->Ui->boxStart(__('Associated Clubs'), 6) ?>
 
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-</div>
-    <div class="clearfix"></div>
-</div>
+    <p>The following Clubs are associated with this Skill. </p>
+    <p>Click/tap on a club for more information on, or to contact, that club.</p>
+
+<?php if (empty($skill->clubs)): ?>
+    <em><?= __("No clubs associated yet.") ?></em>
+<?php else: ?>
+    <?php foreach ($skill->clubs as $club): ?>
+        <?= $this->Html->link(
+            $club->name,
+            ['controller' => 'clubs', 'action' => 'view', $club->id],
+            ['class' => "btn btn-info", 'style' => 'margin-bottom:1rem']) ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+<?= $this->Ui->boxEnd() ?>

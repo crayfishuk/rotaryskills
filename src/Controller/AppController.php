@@ -29,7 +29,19 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
+    /**
+     * Global Helpers
+     * @var array
+     */
     public $helpers = ['Ui'];
+
+
+    /**
+     * True if the logged in user is an Admin
+     * @var bool
+     */
+    public $authIsAdmin = false;
+
 
     /**
      * Initialization hook method.
@@ -97,6 +109,8 @@ class AppController extends Controller
         }
 
         $this->set('Auth', $this->Auth->user());
-        $this->set('authIsAdmin', $this->Auth->user('admin'));
+        $this->authIsAdmin = $this->Auth->user('admin');
+        $this->set('authIsAdmin', $this->authIsAdmin );
+
     }
 }

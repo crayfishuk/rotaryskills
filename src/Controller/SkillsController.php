@@ -68,7 +68,7 @@ class SkillsController extends AppController
     public function view($id = null)
     {
         $skill = $this->Skills->get($id, [
-            'contain' => ['Users', 'Clubs']
+            'contain' => ['Users', 'Clubs', 'Users.Clubs']
         ]);
 
         $this->set('skill', $skill);
@@ -99,6 +99,17 @@ class SkillsController extends AppController
         $this->set('_serialize', ['skill']);
     }
 
+    public function approve($id)
+    {
+        if ($this->Auth->user('admin')) {
+
+            $skill = $this->Skills->get($id);
+            $skill->approved = true;
+            $this->Skills->save($skill);
+        }
+        $this->redirect($this->referer());
+
+    }
     /**
      * Edit method
      *

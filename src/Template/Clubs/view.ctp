@@ -1,6 +1,6 @@
 <?php /** @var \App\View\AppView $this */ ?>
-<?php /** @var \App\Model\Entity\Club $club */ ?>
 <?php /** @var \App\Model\Entity\User $Auth */ ?>
+<?php /** @var \App\Model\Entity\Club $club */ ?>
 
 <?= $this->Ui->boxStart('Club Information', 6) ?>
 
@@ -39,7 +39,7 @@
     <p><?= $users ?></p>
 
 <?php if ($authIsClubAdmin) {
-    echo $this->Html->link(__('Edit Club'), ['action' => 'edit', $club->id], ['class' => 'btn btn-success']);
+    echo $this->Ui->button(__('Edit Club'), ['action' => 'edit', $club->id]);
 } ?>
 
 <?= $this->Ui->boxEnd() ?>
@@ -48,15 +48,16 @@
 
     <p>The club has published the following skills. Click/tap on a skill for more information.</p>
 
-    <?php if (empty($club->skills)): ?>
-        <p><?= __("No skills listed yet") ?></p>
-    <?php else: ?>
-        <?php foreach ($club->skills as $skills): ?>
-            <?= $this->Html->link(
-                $skills->title,
-                ['controller' => 'skills', 'action' => 'view', $skills->id],
-                ['class' => "btn btn-info", 'style' => 'margin-bottom:1rem']) ?>
-        <?php endforeach; ?>
-    <?php endif; ?>
+<?php if (empty($club->skills)): ?>
+    <p><?= __("No skills listed yet") ?></p>
+<?php else: ?>
+    <?php foreach ($club->skills as $skills): ?>
+        <?= $this->Ui->button(
+            $skills->title,
+            ['controller' => 'skills', 'action' => 'view', $skills->id],
+            'info',
+            ['class' => "btn btn-info", 'style' => 'margin-bottom:1rem']) ?>
+    <?php endforeach; ?>
+<?php endif; ?>
 
 <?= $this->Ui->boxEnd() ?>

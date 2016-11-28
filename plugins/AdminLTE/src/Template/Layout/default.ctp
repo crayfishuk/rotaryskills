@@ -64,7 +64,7 @@
 
         <?php echo $this->Flash->render(); ?>
         <?php echo $this->Flash->render('auth'); ?>
-        <?php if (!empty($title)) : ?>
+        <?php if (isset($title) || ( $title = $this->fetch('title') ) != '') : ?>
             <section class="content-header">
                 <h1><?= $title ?></h1>
             </section>

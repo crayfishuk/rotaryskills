@@ -18,6 +18,16 @@ class UiHelper extends Helper
 
     public $helpers = ['Html'];
 
+    /**
+     * Create an (optionally titled) box with n notional columns.
+     *
+     * Default to 'md' type unless specified otherwise
+     *
+     * @param null   $title
+     * @param int    $cols
+     * @param string $size
+     * @return string
+     */
     public function boxStart($title = null, $cols = 12, $size = 'md')
     {
         $op = "<div class='col-$size-$cols'><div class='box'>";
@@ -42,13 +52,15 @@ EOT;
     }
 
     /**
+     * Return the HTML to close the boxStart'ed box.
+     *
      * @return string
      */
     public function boxEnd()
     {
         return <<< EOT
 
-</div><!-- boxbody --> 
+</div><!-- box-body --> 
 </div><!-- box -->
 </div><!-- col -->
 EOT;
@@ -56,13 +68,17 @@ EOT;
     }
 
     /**
+     * Display one or more labels in coloured tags - return an HTML segment
+     *
+     * Takes a single pair or an array. So either (text,colour) or [text=>colour,...]
+     *
      * @param        $labels
      * @param string $color
      * @return string
      */
     public function label($labels, $color = "green")
     {
-        if ( ($noWrap = !is_array($labels)) ) {
+        if (($noWrap = !is_array($labels))) {
             $labels = [$labels => $color];
         }
 
@@ -72,9 +88,16 @@ EOT;
         }
 
         if (!$noWrap) {
-            $op = $this->Html->tag('span', $op, ['class'=>'pull-right-container']);
+            $op = $this->Html->tag('span', $op, ['class' => 'pull-right-container']);
         }
         return $op;
+    }
+
+    public function button($text, $url, $type='success', $options = [])
+    {
+        $class = "btn btn-$type " . ( isset($options['class']) ? $options['class'] : '' );
+        $options['class'] = $class;
+        return $this->Html->link($text, $url, $options);
     }
 
 }

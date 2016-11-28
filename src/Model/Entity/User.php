@@ -75,4 +75,5 @@ class User extends Entity
             $this->_properties['admin'] ||
             ($this->_properties['club_admin'] && $this->_properties['club_id'] == $clubId);
     }
+
 }
