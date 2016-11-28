@@ -14,6 +14,7 @@
 namespace App\View;
 
 use AdminLTE\View\Helper\FormHelper;
+use App\View\Helper\UiHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\TextHelper;
 use Cake\View\View;
@@ -27,6 +28,7 @@ use Cake\View\View;
  *
  * @property HtmlHelper $Html
  * @property TextHelper $Text
+ * @property UiHelper $Ui
  * @property FormHelper $Form
  */
 class AppView extends View

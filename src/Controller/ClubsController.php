@@ -90,7 +90,7 @@ class ClubsController extends AppController
     public function edit($id = null)
     {
         $club = $this->Clubs->get($id, [
-            'contain' => ['Skills'],
+            'contain' => ['Skills', 'Users'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);

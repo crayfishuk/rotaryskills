@@ -68,8 +68,10 @@ class AppController extends Controller
     public function beforeFilter(Event $event)
     {
         // Allow these actions globally
+        // TODO Set these sensibly
         $this->Auth->allow(['index', 'cloud']);
         $this->Auth->allow(['view']);
+        $this->Auth->allow(['pages']);
 
         return parent::beforeFilter($event);
     }
