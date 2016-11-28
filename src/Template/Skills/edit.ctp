@@ -2,13 +2,19 @@
 
     <?= $this->Ui->boxStart(__('Edit Skill Information'), 8) ?>
     <?= $this->Form->create($skill) ?>
+
+    <?= $this->Form->input('title'); ?>
+    <?= $this->Form->input('description', ['type' => 'textarea']); ?>
+
     <fieldset>
-        <legend><?= __('Edit Skill') ?></legend>
+        <legend>Admin Only</legend>
         <?php
-            echo $this->Form->input('title');
-            echo $this->Form->input('description');
-            echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('clubs._ids', ['options' => $clubs, 'style'=>'width:80%']);
+        if ($authIsAdmin) {
+            echo $this->Form->input('user_id', ['options' => $users, 'label' => 'Creator']);
+            echo $this->Form->input('clubs._ids', ['options' => $clubs, 'style' => 'width:80%']);
+        } else {
+            echo "<b>Created by</b>" . $skill->User->full_name;
+        }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

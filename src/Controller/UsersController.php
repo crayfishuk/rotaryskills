@@ -105,6 +105,22 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
+
+    public function approve($id)
+    {
+        $user = $this->Users->get($id);
+
+        // Allow approval if current login is Admin
+        // or current login is Club Admin for the User-in-question's Club
+        if ($this->Auth->user('admin') ||
+            $this->Users->isClubAdmin($this->Auth->user('id'), $user->club_id)) {
+
+            $user->approved = true;
+            $this->Users->save($user);
+        }
+        $this->redirect($this->referer());
+
+    }
     /**
      * Edit method
      *
