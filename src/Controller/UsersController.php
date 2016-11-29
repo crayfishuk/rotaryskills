@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Network\Exception\ForbiddenException;
 
 /**
  * Users Controller
@@ -13,7 +14,7 @@ class UsersController extends AppController
 {
 
     public $paginate = [
-        'limit' => 15
+        'limit' => 15,
     ];
 
     public function beforeFilter(Event $event)
@@ -25,6 +26,7 @@ class UsersController extends AppController
 
     /**
      * Log a user in
+     *
      * @return \Cake\Network\Response|null
      */
     public function login()
@@ -42,12 +44,14 @@ class UsersController extends AppController
 
     /**
      * Log a user out
+     *
      * @return \Cake\Network\Response|null
      */
     public function logout()
     {
         return $this->redirect($this->Auth->logout());
     }
+
     /**
      * Index method
      *
@@ -55,11 +59,19 @@ class UsersController extends AppController
      */
     public function index()
     {
+        if ($this->Auth->user('admin')) {
+            $conditions = [];
+        } elseif ($this->Auth->user('club_admin')) {
+            $conditions = ['Users.club_id' => $this->Auth->user('club_id')];
+        } else {
+            $conditions = ['Users.id' => $this->Auth->user('id')];
+        }
         $this->paginate = [
-            'contain' => ['Clubs'],
-            'order' => ['last_name' => 'ASC', 'first_name' => 'ASC']
+            'contain'    => ['Clubs'],
+            'conditions' => $conditions,
+            'order'      => ['last_name' => 'ASC', 'first_name' => 'ASC'],
         ];
-        $users = $this->paginate($this->Users);
+        $users          = $this->paginate($this->Users);
 
         $this->set(compact('users'));
         $this->set('_serialize', ['users']);
@@ -75,7 +87,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Clubs', 'Skills', 'Skills.Users']
+            'contain' => ['Clubs', 'Skills', 'Skills.Users'],
         ]);
 
         $this->set('user', $user);
@@ -89,9 +101,23 @@ class UsersController extends AppController
      */
     public function add()
     {
+        if (!$this->Auth->user('admin') &&
+            !$this->Auth->user('club_admin')
+        ) {
+            throw new ForbiddenException('Only Admin & ClubAdmin users can create new users.');
+        }
+
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
+
+            // Force the settings for Non-Admin creation of account to be user's Club & Non-admin
+            if (!$this->Auth->user('admin')) {
+                $user->club_id = $this->Auth->user('club_id');
+                $user->admin = false;
+                $user->club_admin = false;
+            }
+
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -105,7 +131,6 @@ class UsersController extends AppController
         $this->set('_serialize', ['user']);
     }
 
-
     public function approve($id)
     {
         $user = $this->Users->get($id);
@@ -113,7 +138,8 @@ class UsersController extends AppController
         // Allow approval if current login is Admin
         // or current login is Club Admin for the User-in-question's Club
         if ($this->Auth->user('admin') ||
-            $this->Users->isClubAdmin($this->Auth->user('id'), $user->club_id)) {
+            $this->Users->isClubAdmin($this->Auth->user('id'), $user->club_id)
+        ) {
 
             $user->approved = true;
             $this->Users->save($user);
@@ -121,6 +147,7 @@ class UsersController extends AppController
         $this->redirect($this->referer());
 
     }
+
     /**
      * Edit method
      *
@@ -131,8 +158,15 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
+
+        if (!$this->Auth->user('admin') &&
+            !($this->Auth->user('club_admin') && $user->club_id == $this->Auth->user('club_id'))
+        ) {
+            throw new ForbiddenException('Only Admin and ClubAdmins for this user can edit.');
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {

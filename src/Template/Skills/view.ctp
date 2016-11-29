@@ -35,10 +35,12 @@
             </td>
         </tr>
     </table>
-    <?php if ($authIsAdmin) : ?>
-        <?= !$skill->approved ? $this->Ui->button('Approve', ['action'=>'approve', $skill->id]) : '' ?>
-        <?= $this->Ui->button('Edit', ['action'=>'edit', $skill->id ]); ?>
-    <?php endif ?>
+<?php if ($authIsAdmin) : ?>
+    <?= !$skill->approved ? $this->Ui->button('Approve', ['action' => 'approve', $skill->id]) : '' ?>
+<?php endif; ?>
+<?php if ($authIsAdmin || $Auth['id'] == $skill->user_id) : ?>
+    <?= $this->Ui->button(__('Edit'), ['action' => 'edit', $skill->id]); ?>
+<?php endif ?>
 <?= $this->Ui->boxEnd() ?>
 
 <?= $this->Ui->boxStart(__('Associated Clubs'), 6) ?>

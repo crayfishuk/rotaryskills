@@ -5,9 +5,11 @@
         <legend><?= __('Add Skill') ?></legend>
         <?php
             echo $this->Form->input('title');
-            echo $this->Form->input('description');
-            echo $this->Form->input('user_id', ['options' => $users]);
-            echo $this->Form->input('clubs._ids', ['options' => $clubs]);
+            echo $this->Form->input('description', ['type' => 'textarea']);
+            if ($authIsAdmin) {
+                echo $this->Form->input('user_id', ['options' => $users]);
+                echo $this->Form->input('clubs._ids', ['options' => $clubs]);
+            }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

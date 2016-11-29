@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Collection\Collection;
 use Cake\Controller\Component\AuthComponent;
+use Cake\Network\Exception\ForbiddenException;
 
 /**
  * Clubs Controller
@@ -64,6 +65,8 @@ class ClubsController extends AppController
      */
     public function add()
     {
+        if (!$this->Auth->user('admin')) throw new ForbiddenException('Only Admin users can add Clubs');
+
         $club = $this->Clubs->newEntity();
         if ($this->request->is('post')) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
@@ -92,6 +95,13 @@ class ClubsController extends AppController
         $club = $this->Clubs->get($id, [
             'contain' => ['Skills', 'Users'],
         ]);
+
+        if (!$this->Auth->user('admin') &&
+            !($this->Auth->user('club_admin') && $this->Auth->user('club_id') == $club->id)
+        ) {
+            throw new ForbiddenException('Only Admin and ClubAdmin users for this club can edit the Club.');
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
             $club = $this->Clubs->patchEntity($club, $this->request->data);
             if ($this->Clubs->save($club)) {
@@ -102,7 +112,17 @@ class ClubsController extends AppController
                 $this->Flash->error(__('The club could not be saved. Please, try again.'));
             }
         }
-        $skills = $this->Clubs->Skills->find('list', ['limit' => 200]);
+
+        // Find skills that are approved or owned by this club
+        $skills = $this->Clubs->Skills
+            ->find('list')
+            ->contain(['Users'])
+            ->where(
+                ['OR' => [
+                    ['Skills.approved' => true],
+                    ['Users.club_id' => $club->id]],
+                ]);
+
         $this->set(compact('club', 'skills'));
         $this->set('_serialize', ['club']);
     }

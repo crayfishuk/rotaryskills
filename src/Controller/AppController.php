@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Network\Exception\ForbiddenException;
 
 /**
  * Application Controller
@@ -85,7 +86,12 @@ class AppController extends Controller
         $this->Auth->allow(['view']);
         $this->Auth->allow(['pages']);
 
+        if ($this->request->action == 'delete' && !$this->Auth->user('admin')) {
+            throw new ForbiddenException('Only Admin can delete.');
+        }
+
         return parent::beforeFilter($event);
+
     }
 
     /**
@@ -107,6 +113,7 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+
 
         $this->set('Auth', $this->Auth->user());
         $this->authIsAdmin = $this->Auth->user('admin');

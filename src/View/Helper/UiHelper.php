@@ -93,9 +93,19 @@ EOT;
         return $op;
     }
 
-    public function button($text, $url, $type='success', $options = [])
+    public function button($text, $url, $options = [])
     {
-        $class = "btn btn-$type " . ( isset($options['class']) ? $options['class'] : '' );
+        // Set the default type and size
+        $options = array_merge(['type' => 'default', 'size' => ''], $options);
+
+        // Add any new classes to passed in class
+        $class = "btn btn-" . ($options['type']) . ' ' .
+            (!empty($options['size']) ? 'btn-' . $options['size'] . ' ' : '') .
+            (isset($options['class']) ? $options['class'] : '');
+
+        // Clear the used options - all others get passed through to the Htmlhelper
+        unset($options['size'],$options['type']);
+
         $options['class'] = $class;
         return $this->Html->link($text, $url, $options);
     }

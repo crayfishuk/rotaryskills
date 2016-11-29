@@ -4,27 +4,27 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th scope="col"><?= $this->Paginator->sort('username') ?></th>
             <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
             <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
             <th scope="col"><?= $this->Paginator->sort('approved') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('username') ?></th>
             <th scope="col"><?= $this->Paginator->sort('email') ?></th>
             <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
             <?php if ($Auth['admin']) : ?>
                 <th scope="col"><?= $this->Paginator->sort('club_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('club_admin') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('admin') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
             <?php endif; ?>
-            <th scope="col" class="actions"><?= __('Actions') ?></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($users as $user): ?>
             <tr>
+                <td><?= $this->Html->link( $user->username,['action' => 'view', $user->id] ) ?></td>
                 <td><?= h($user->last_name) ?></td>
                 <td><?= h($user->first_name) ?></td>
                 <td><?= h($user->approved ? 'Y':'') ?></td>
-                <td><?= h($user->username) ?></td>
                 <td><?= h($user->email) ?></td>
                 <td><?= h($user->modified) ?></td>
                 <?php if ($Auth['admin']) : ?>
@@ -33,7 +33,6 @@
                     <td><?= h($user->admin) ?></td>
                 <?php endif; ?>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
                 </td>

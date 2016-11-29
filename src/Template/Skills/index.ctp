@@ -1,3 +1,6 @@
+<?php /** @var \App\View\AppView $this */ ?>
+<?php /** @var \App\Model\Entity\Skill[] $skills */ ?>
+
 <div class="row">
 
     <?= $this->Ui->boxStart(__('Skills'), 8) ?>
@@ -6,25 +9,29 @@
         <tr>
             <th scope="col"><?= $this->Paginator->sort('title') ?></th>
             <th scope="col"><?= $this->Paginator->sort('description') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('User.username', ['label'=>'Creator']) ?></th>
-            <!--<th scope="col">--><? //= $this->Paginator->sort('created') ?><!--</th>-->
-            <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-            <th scope="col" class="actions"><?= __('Actions') ?></th>
+            <th scope="col"><?= $this->Paginator->sort('modified', ['label' => 'Updated']) ?></th>
+
+            <?php if ($authIsAdmin) : ?>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            <?php endif; ?>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($skills as $skill): ?>
             <tr>
-                <td><?= h($skill->title) ?></td>
-                <td><?= h($skill->description) ?></td>
-                <td><?= $skill->has('user') ? $this->Html->link($skill->user->username, ['controller' => 'Users', 'action' => 'view', $skill->user->id]) : '' ?></td>
-                <!--<td>--><? //= h($skill->created) ?><!--</td>-->
-                <td><?= h($skill->modified) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $skill->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $skill->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $skill->id], ['confirm' => __('Are you sure you want to delete # {0}?', $skill->id)]) ?>
+                <td>
+                    <?= $this->Html->link($skill->title, ['action' => 'view', $skill->id]) ?>
+                    <?= !$skill->approved ? $this->Ui->label('Pending', 'orange') : '' ?>
                 </td>
+                <td style="max-width:40rem"><?= $this->Text->truncate($skill->description, 40) ?></td>
+                <td><?= $this->Time->nice($skill->modified) ?></td>
+
+                <?php if ($authIsAdmin) : ?>
+                    <td>
+                        <?= $this->Ui->button(__('Edit'), ['action' => 'edit', $skill->id], ['size' => 'xs']) ?>
+                        <?= $this->Ui->button(__('Approve'), ['action' => 'approve', $skill->id], ['size' => 'xs']) ?>
+                    </td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
         </tbody>

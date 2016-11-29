@@ -47,16 +47,19 @@
 <?= $this->Ui->boxStart(__("Club's Skills"), 6) ?>
 
     <p>The club has published the following skills. Click/tap on a skill for more information.</p>
+    <p>'Locked' skills are only available to your Club until approved.</p>
 
 <?php if (empty($club->skills)): ?>
     <p><?= __("No skills listed yet") ?></p>
 <?php else: ?>
-    <?php foreach ($club->skills as $skills): ?>
+    <?php foreach ($club->skills as $skill): ?>
         <?= $this->Ui->button(
-            $skills->title,
-            ['controller' => 'skills', 'action' => 'view', $skills->id],
-            'info',
-            ['class' => "btn btn-info", 'style' => 'margin-bottom:1rem']) ?>
+            $skill->approved ? $skill->title : '<i class="fa fa-lock"></i> ' . $skill->title,
+            ['controller' => 'skills', 'action' => 'view', $skill->id],
+            [
+                'escape' => false,
+                'type'   => $skill->approved ? 'info' : 'warning',
+                'style'  => 'margin-bottom:1rem']) ?>
     <?php endforeach; ?>
 <?php endif; ?>
 

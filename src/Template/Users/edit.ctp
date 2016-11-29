@@ -9,11 +9,13 @@
             echo $this->Form->input('first_name');
             echo $this->Form->input('club_id', ['options' => $clubs]);
             echo $this->Form->input('approved');
-            echo $this->Form->input('club_admin');
             echo $this->Form->input('username');
             echo $this->Form->input('email');
             echo $this->Form->input('password');
-            echo $this->Form->input('admin');
+            if ($authIsAdmin) {
+                echo $this->Form->input('admin');
+                echo $this->Form->input('club_admin');
+            }
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
