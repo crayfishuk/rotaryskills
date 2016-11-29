@@ -1,8 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
-use App\Model\Table\ClubsTable;
+use Cake\Event\Event;
 use Cake\Network\Exception\ForbiddenException;
 
 /**
@@ -12,6 +11,16 @@ use Cake\Network\Exception\ForbiddenException;
  */
 class SkillsController extends AppController
 {
+
+    /**
+     * @param Event $event
+     * @return \Cake\Network\Response|null
+     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['search', 'cloud', 'view']);
+    }
 
     /**
      * Show a cloud of Skills tags
@@ -127,6 +136,20 @@ class SkillsController extends AppController
             $this->Skills->save($skill);
         }
         $this->redirect($this->referer());
+
+    }
+
+    public function search($needle)
+    {
+        $query = $this->Skills->find()
+                              ->contain('Clubs')
+                              ->where(['Skills.title LIKE' => "%$needle%"])
+                              ->orWhere(['Skills.description LIKE' => "%$needle%"])
+                              ->order(['Skills.title' => 'ASC']);
+
+        $skills = $query->all();
+
+        $this->set(compact('skills', 'needle'));
 
     }
 

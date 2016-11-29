@@ -82,7 +82,7 @@ class AppController extends Controller
     {
         // Allow these actions globally
         // TODO Set these sensibly
-        $this->Auth->allow(['index', 'cloud']);
+        $this->Auth->allow(['index']);
         $this->Auth->allow(['view']);
         $this->Auth->allow(['pages']);
 
