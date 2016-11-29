@@ -7,6 +7,9 @@
         column-gap: 2em; /* shown in yellow */
         column-rule: 1px solid gray;
         padding: 5px; /* shown in blue */
+        -webkit-column-count:2;
+        -moz-column-count:2;
+        column-count:2;
     }
 </style>
 
