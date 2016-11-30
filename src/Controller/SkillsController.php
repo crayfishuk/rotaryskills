@@ -139,15 +139,28 @@ class SkillsController extends AppController
 
     }
 
-    public function search($needle)
+    public function search()
     {
-        $query = $this->Skills->find()
-                              ->contain('Clubs')
-                              ->where(['Skills.title LIKE' => "%$needle%"])
-                              ->orWhere(['Skills.description LIKE' => "%$needle%"])
-                              ->order(['Skills.title' => 'ASC']);
+        if (!$this->request->is(['Post'])) {
+            $skills = [];
+            $needle = '';
+        } else {
 
-        $skills = $query->all();
+            $countSkills = $this->Skills->find()->count();
+
+            $needle = $this->request->data('needle');
+            $query  = $this->Skills->find()
+                                   ->contain('Clubs')
+                                   ->where(['Skills.title LIKE' => "%$needle%"])
+                                   ->orWhere(['Skills.description LIKE' => "%$needle%"])
+                                   ->order(['Skills.title' => 'ASC']);
+
+            $skills = $query->all();
+
+            if (count($skills)*2 > $countSkills) {
+                $this->set('moreInfo', true );
+            }
+        }
 
         $this->set(compact('skills', 'needle'));
 

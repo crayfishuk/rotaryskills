@@ -1,19 +1,11 @@
-<?php
-$file = ROOT . DS . 'src' . DS . 'Template' . DS . 'Element' . DS . 'aside' . DS . 'form.ctp';
+<?php /** @var \App\View\AppView $this */ ?>
 
-if (file_exists($file)) {
-    ob_start();
-    include_once $file;
-    echo ob_get_clean();
-} else {
-?>
-<form action="#" method="get" class="sidebar-form">
+<?= $this->Form->create('Search', ['url'=>['controller'=>'skills', 'action'=>'search']]) ?>
     <div class="input-group">
-        <input type="text" name="q" class="form-control" placeholder="Search...">
+        <input type="text" name="needle" class="form-control" placeholder="Search...">
         <span class="input-group-btn">
             <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
             </button>
         </span>
     </div>
-</form>
-<?php } ?>
+<?= $this->Form->end() ?>
