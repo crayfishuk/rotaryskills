@@ -10,7 +10,7 @@
             <th scope="row"><?= __('Title') ?></th>
             <td>
                 <?= h($skill->title) ?>
-                <?= $skill->approved ? $this->Ui->label('Approved') : $this->Ui->label('Pending', 'orange') ?>
+                <?= $skill->approved ? $this->Ui->label(['Approved'=>'green']) : $this->Ui->label(['Pending'=>'orange']) ?>
             </td>
         </tr>
         <tr>

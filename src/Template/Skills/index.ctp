@@ -21,7 +21,7 @@
             <tr>
                 <td>
                     <?= $this->Html->link($skill->title, ['action' => 'view', $skill->id]) ?>
-                    <?= !$skill->approved ? $this->Ui->label('Pending', 'orange') : '' ?>
+                    <?= !$skill->approved ? $this->Ui->label(['Pending'=>'orange']) : '' ?>
                 </td>
                 <td style="max-width:40rem"><?= $this->Text->truncate($skill->description, 40) ?></td>
                 <td><?= $this->Time->nice($skill->modified) ?></td>

@@ -72,23 +72,20 @@ EOT;
      *
      * Takes a single pair or an array. So either (text,colour) or [text=>colour,...]
      *
-     * @param        $labels
-     * @param string $color
+     * @param string[] $labels
+     * @param string   $type
      * @return string
+     * @internal param string $color
      */
-    public function label($labels, $color = "green")
+    public function label($labels, $type = "")
     {
-        if (($noWrap = !is_array($labels))) {
-            $labels = [$labels => $color];
-        }
-
         $op = '';
         foreach ($labels as $label => $color) {
-            $op .= "<small class='label pull-right bg-$color' style='margin-left:0.6em'>$label</small>";
+            $op .= "<small class='label $type bg-$color' style='margin-left:0.6em'>$label</small>";
         }
 
-        if (!$noWrap) {
-            $op = $this->Html->tag('span', $op, ['class' => 'pull-right-container']);
+        if (count($labels)>1) {
+            $op = $this->Html->tag('span', $op, ['class' => '']);
         }
         return $op;
     }
@@ -104,7 +101,7 @@ EOT;
             (isset($options['class']) ? $options['class'] : '');
 
         // Clear the used options - all others get passed through to the Htmlhelper
-        unset($options['size'],$options['type']);
+        unset($options['size'], $options['type']);
 
         $options['class'] = $class;
         return $this->Html->link($text, $url, $options);

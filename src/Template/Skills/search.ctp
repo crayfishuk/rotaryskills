@@ -24,11 +24,14 @@
 
 <?php foreach ($skills as $skill) : ?>
 
-    <h3><?= $this->Text->highlight(
+    <h3>
+        <?= $this->Ui->button(__('View Skill info'), ['action' => 'view', $skill->id], ['type' => 'info']) ?>
+        <?= $this->Text->highlight(
             $skill->title,
             $needle,
             ['format' => '<b>\1</b>']) ?>
-        <?= $this->Ui->button(__('View Skill info'), ['action' => 'view', $skill->id], ['type' => 'info']) ?>
+        <?php $clubs = ( (1==($count=count($skill->clubs))) ? "$count club" : "$count clubs" ); ?>
+        <?= $this->Ui->label( [$clubs => ($count ? 'green' : 'red')]) ?>
     </h3>
     <p><?= $this->Text->highlight(
             $skill->description,
