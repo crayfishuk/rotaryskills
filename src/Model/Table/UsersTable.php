@@ -155,4 +155,17 @@ class UsersTable extends Table
                              ]);
     }
 
+    /**
+     * Get a list of UserId & names for this club
+     *
+     * @param $clubId
+     * @return $this|array
+     */
+    public function getUserIdsInClub($clubId)
+    {
+        return $this->find('list')
+             ->where(['id'=>$clubId])
+             ->contain(['contain'=>'Users']);
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php /** @var \App\View\AppView $this */ ?>
 
-<?= $this->Form->create('Search', ['url'=>['controller'=>'skills', 'action'=>'search']]) ?>
+<?= $this->Form->create('Search', ['url'=>['controller'=>'skills', 'action'=>'search'], 'class'=>'sidebar-form']) ?>
     <div class="input-group">
         <input type="text" name="needle" class="form-control" placeholder="Search...">
         <span class="input-group-btn">

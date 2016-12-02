@@ -10,14 +10,19 @@
 
 <div class="clearfix"></div>
 
+<hr/>
+
+<?php if (empty($this->request->data('needle'))) : ?>
+    <p>Enter text in the search box above, and the Skills titles and descriptions will be searched for any that contain your text.</p>
+    <?php return ?>
+<?php endif ?>
+
 <?php if (isset($moreInfo)) : ?>
-    <hr/>
     <p>You'll need to enter more text into the search box; the search is too general.</p>
     <?php return; ?>
 <?php endif; ?>
 
 <?php if (!count($skills)) : ?>
-    <hr/>
     <p>No search results found. Try a different search...</p>
     <?php return; ?>
 <?php endif; ?>

@@ -69,7 +69,7 @@ class SkillsController extends AppController
 
         $skills = $this->paginate($this->Skills);
 
-        $this->set(compact('skills'));
+        $this->set(compact('skills', $userId));
         $this->set('_serialize', ['skills']);
     }
 
@@ -86,6 +86,7 @@ class SkillsController extends AppController
             'contain' => ['Users', 'Clubs'],
         ]);
 
+        $this->set('ownerClub', $this->Skills->Clubs->get($skill->user->club_id));
         $this->set('skill', $skill);
         $this->set('_serialize', ['skill']);
     }

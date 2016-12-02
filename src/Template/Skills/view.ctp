@@ -10,7 +10,8 @@
             <th scope="row"><?= __('Title') ?></th>
             <td>
                 <?= h($skill->title) ?>
-                <?= $skill->approved ? $this->Ui->label(['Approved'=>'green']) : $this->Ui->label(['Pending'=>'orange']) ?>
+                <?= $skill->approved ? $this->Ui->label(['Approved' => 'green']) :
+                    $this->Ui->label(['Pending' => 'orange']) ?>
             </td>
         </tr>
         <tr>
@@ -22,13 +23,11 @@
             <td>
                 <?php if ($skill->has('user')) {
                     echo $skill->user->full_name;
-                    if ($skill->user->has('club')) {
-                        echo ' (' .
-                            $this->Html->link(
-                                $skill->user->club->name,
-                                ['controller' => 'Clubs', 'action' => 'view', $skill->user->club->id]) .
-                            ')';
-                    }
+                    echo ' (' .
+                        $this->Html->link(
+                            $ownerClub->name,
+                            ['controller' => 'Clubs', 'action' => 'view', $ownerClub->id]) .
+                        ')';
                 }
                 ?>
                 <?= $this->Time->nice($skill->created) ?>

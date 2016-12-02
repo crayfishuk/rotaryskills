@@ -1,41 +1,49 @@
+<?php /** @var \App\View\AppView $this */ ?>
+<?php /** @var \App\Model\Entity\User[] $users */ ?>
+
 <div class="row">
 
     <?= $this->Ui->boxStart(__('Users'), 8) ?>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col"><?= $this->Paginator->sort('username') ?></th>
+            <th scope="col" class="visible-sm"><?= $this->Paginator->sort('username') ?></th>
             <th scope="col"><?= $this->Paginator->sort('last_name') ?></th>
             <th scope="col"><?= $this->Paginator->sort('first_name') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('approved') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('email') ?></th>
-            <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+            <th scope="col"><?= __('Status') ?></th>
+            <th scope="col" class="visible-lg"><?= $this->Paginator->sort('modified') ?></th>
             <?php if ($Auth['admin']) : ?>
-                <th scope="col"><?= $this->Paginator->sort('club_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('club_admin') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('admin') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                <th scope="col" class="visible-lg"><?= $this->Paginator->sort('club_id') ?></th>
+                <th scope="col" class="visible-lg"><?= $this->Paginator->sort('club_admin') ?></th>
+                <th scope="col" class="visible-lg"><?= $this->Paginator->sort('admin') ?></th>
+                <th scope="col" class="visible-md"><?= __('Actions') ?></th>
             <?php endif; ?>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($users as $user): ?>
             <tr>
-                <td><?= $this->Html->link( $user->username,['action' => 'view', $user->id] ) ?></td>
+                <td class="visible-sm"><?= $this->Html->link(
+                        $user->username,
+                        ['action' => ($Auth['club_admin'] || $Auth['admin']) ? 'edit' : 'view', $user->id]) ?></td>
                 <td><?= h($user->last_name) ?></td>
                 <td><?= h($user->first_name) ?></td>
-                <td><?= h($user->approved ? 'Y':'') ?></td>
-                <td><?= h($user->email) ?></td>
-                <td><?= h($user->modified) ?></td>
-                <?php if ($Auth['admin']) : ?>
-                    <td><?= $user->has('club') ? $this->Html->link($user->club->name, ['controller' => 'Clubs', 'action' => 'view', $user->club->id]) : '' ?></td>
-                    <td><?= h($user->club_admin) ?></td>
-                    <td><?= h($user->admin) ?></td>
-                <?php endif; ?>
-                <td class="actions">
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                <td>
+                    <?= $user->approved ? $this->Ui->label(['Approved' => 'green']) :
+                        $this->Ui->label(['Pending' => 'orange']) ?>
+                    <?= $user->club_admin ? $this->Ui->label(['ClubAdmin' => 'lime']) : '' ?>
+                    <?= $user->admin ? $this->Ui->label(['Admin' => 'yellow']) : '' ?>
                 </td>
+                <td class="visible-lg"><?= h($user->modified) ?></td>
+                <?php if ($Auth['admin']) : ?>
+                    <td class="visible-lg"><?= $user->has('club') ?
+                            $this->Html->link($user->club->name, ['controller' => 'Clubs', 'action' => 'view', $user->club->id]) :
+                            '' ?></td>
+                    <td class="visible-md">
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
+                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                    </td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -50,15 +58,10 @@
     <?= $this->Ui->boxEnd(); ?>
 
     <?= $this->Ui->boxStart(__('About Users'), 4); ?>
-    <p>Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Curabitur arcu erat, accumsan id imperdiet et,
-        porttitor at sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec
-        velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Praesent sapien massa, convallis a
-        pellentesque nec, egestas non nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-        cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Sed porttitor lectus
-        nibh. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Quisque velit nisi, pretium ut lacinia
-        in, elementum id enim. Nulla quis lorem ut libero malesuada feugiat. Vestibulum ante ipsum primis in faucibus
-        orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit
-        amet ligula.
+    <p>
+        Users with accounts that are approved can login and get access to club contact details.
+    </p>
+    <p> A user marked as 'ClubAdmin' here can create and edit Skills and their own Club skills.
     </p>
     <?= $this->Ui->boxEnd(); ?>
 

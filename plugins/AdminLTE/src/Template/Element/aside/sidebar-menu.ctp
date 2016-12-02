@@ -12,40 +12,51 @@ if (file_exists($file)) {
 
         <li><a href="<?= $this->Url->build('/'); ?>"><i class="fa fa-home"></i> <span>Home</span></a></li>
 
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-check-square-o"></i> <span>Skills</span> <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="<?= $this->Url->build('/skills/index'); ?>"><i class="fa fa-search"></i> View Skills</a>
-                </li>
-                <?php if ($authIsAdmin || $Auth['club_admin']) : ?>
-                    <li><a href="<?= $this->Url->build('/skills/index/' . $Auth['id']); ?>">
-                            <i class="fa fa-search"></i> My Skills</a></li>
-                    <li><a href="<?= $this->Url->build('/skills/add'); ?>"><i class="fa fa-plus"></i> Add a Skill</a>
+        <?php if (empty($Auth)) : ?>
+            <li><a href="<?= $this->Url->build('/skills/index'); ?>"><i class="fa fa-check-square-o"></i> Skills</a>
+        <?php else : ?>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-check-square-o"></i> <span>Skills</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="<?= $this->Url->build('/skills/index'); ?>"><i class="fa fa-search"></i> View
+                            Skills</a>
                     </li>
-                <?php endif; ?>
-            </ul>
-        </li>
+                    <?php if ($authIsAdmin || $Auth['club_admin']) : ?>
+                        <li><a href="<?= $this->Url->build('/skills/index/' . $Auth['id']); ?>">
+                                <i class="fa fa-search"></i> My Skills</a></li>
+                        <li><a href="<?= $this->Url->build('/skills/add'); ?>"><i class="fa fa-plus"></i> Add a
+                                Skill</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        <?php endif; ?>
 
-        <li class="treeview">
-            <a href="#">
-                <i class="fa fa-users"></i> <span>Clubs</span> <i class="fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="treeview-menu">
-                <li><a href="<?= $this->Url->build('/clubs/index'); ?>"><i class="fa fa-search"></i> View Clubs</a>
-                </li>
-                <?php if (!empty($Auth)) : ?>
-                    <li><a href="<?= $this->Url->build('/clubs/view/' . $Auth['club_id']); ?>"><i
-                                    class="fa fa-search"></i> My Club </a>
+        <?php if (empty($Auth)) : ?>
+            <li><a href="<?= $this->Url->build('/clubs/index'); ?>"><i class="fa fa-users"></i> Clubs</a>
+        <?php else : ?>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i> <span>Clubs</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="<?= $this->Url->build('/clubs/index'); ?>"><i class="fa fa-search"></i> View Clubs</a>
                     </li>
-                <?php endif; ?>
+                    <?php if (!empty($Auth)) : ?>
+                        <li><a href="<?= $this->Url->build('/clubs/view/' . $Auth['club_id']); ?>"><i
+                                        class="fa fa-search"></i> My Club </a>
+                        </li>
+                    <?php endif; ?>
 
-                <?php if ($authIsAdmin) : ?>
-                    <li><a href="<?= $this->Url->build('/clubs/add'); ?>"><i class="fa fa-plus"></i> Add</a></li>
-                <?php endif; ?>
-            </ul>
-        </li>
+                    <?php if ($authIsAdmin) : ?>
+                        <li><a href="<?= $this->Url->build('/clubs/add'); ?>"><i class="fa fa-plus"></i> Add</a></li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        <?php endif; ?>
 
         <?php if ($authIsAdmin || $Auth['club_admin']) : ?>
 
