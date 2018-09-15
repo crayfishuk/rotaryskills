@@ -236,7 +236,6 @@ Configure::write('Theme', [
     ]
 ]);
 
-# Because the Plugin isn't under the control of composer (it's included manually)
-# we need to include the autoload flag -
+
 # see https://book.cakephp.org/3.0/en/plugins.html#manually-autoloading-plugin-classes
-Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true, 'autoload'=>true]);
+Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
