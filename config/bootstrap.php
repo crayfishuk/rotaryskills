@@ -222,11 +222,6 @@ if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
 
-Plugin::load('Migrations');
-//Plugin::load('Gourmet/KnpMenu');
-//Plugin::load('BootstrapUI');
-Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true]);
-
 
 Configure::write('Theme', [
     'title' => 'Rotary1260 SkillsDB',
@@ -240,3 +235,8 @@ Configure::write('Theme', [
         'show_social' => false
     ]
 ]);
+
+# Because the Plugin isn't under the control of composer (it's included manually)
+# we need to include the autoload flag -
+# see https://book.cakephp.org/3.0/en/plugins.html#manually-autoloading-plugin-classes
+Plugin::load('AdminLTE', ['bootstrap' => true, 'routes' => true, 'autoload'=>true]);

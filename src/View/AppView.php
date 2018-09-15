@@ -50,6 +50,7 @@ class AppView extends View
      */
     public function initialize()
     {
-        $this->loadHelper('Form', ['className' => 'AdminLTE.Form']);
+        parent::initialize();
+        $this->loadHelper('AdminLTE.Form'); //, ['className' => 'AdminLTE.Form']);
     }
 }
