@@ -4,4 +4,4 @@
 /logs/*
 .ftpconfig
 .gitconfig
-/.idea/*
+.idea/*
