@@ -10,7 +10,7 @@
     <ul class="list-group list-group-unbordered">
         <?php if (!empty($club->url)) : ?>
             <li class="list-group-item"><i class="fa fa-globe"></i> <?= __('Club Website') ?>
-                <?= $this->Html->link($club->url, 'http://' . $club->url, ['class' => 'pull-right']) ?>
+                <?= $this->Html->link($club->url, 'http://' . $club->url, ['class' => 'pull-right', 'target'=>'_blank']) ?>
             </li>
         <?php endif ?>
 
